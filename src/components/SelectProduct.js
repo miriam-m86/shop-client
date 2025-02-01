@@ -5,14 +5,17 @@ import Autocomplete from '@mui/material/Autocomplete';
 import { useDispatch, useSelector } from 'react-redux';
 import {addItemToCart, removeItemFromCart, incrementItemQuantity, decrementItemQuantity } from '../reducers';
 import Cart from './Cart'
+import { useNavigate } from "react-router-dom";
+
 const SelectProduct = () => {
  
-    const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [productList, setProductList] = useState([]);
-  
+  const [productList, setProductList] = useState([]); 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const handleAddItemToCart = (product) => {
     dispatch(addItemToCart(product));
   };
@@ -31,9 +34,12 @@ const SelectProduct = () => {
 
     fetchData();
   }, []);
-
+  const handleCashPayment = () => {
+    navigate("/payment"); // Navigate to CashPayment component
+  };
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
+  
 
   return (
     <div>
@@ -60,7 +66,7 @@ const SelectProduct = () => {
       sx={{ width: 300 }}
       renderInput={(params) => <TextField {...params} label="חפש" />}
     />
-
+<button onClick={handleCashPayment}>Pay with Cash</button>;
 <Cart></Cart>
     </div>
   );
